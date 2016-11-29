@@ -1,0 +1,60 @@
+.form-signin {
+  width: 320px;
+  height: 300px;
+  padding: 0;
+  top: 10em;
+  left: 50%;
+  position: absolute;
+  margin: 0 0 0 -160px; }
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+    font-weight: normal; }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px; }
+  .form-signin .form-control:focus {
+    z-index: 2; }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0; }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+a {
+  color: #00B7FF; }
+
+.form {
+  position: relative; }
+  .form input {
+    width: 20em; }
+  .form .fa-spin {
+    display: none;
+    position: absolute;
+    left: 21em;
+    top: 0.5em; }
+  .form.loading .fa-spin {
+    display: block; }
+  .form .suggest-box {
+    position: absolute;
+    color: #fff;
+    margin: 0;
+    padding: 0; }
+    .form .suggest-box li {
+      padding: 0.5em 1em;
+      cursor: pointer;
+      list-style-type: none; }
+      .form .suggest-box li:hover {
+        background-color: #659CD8; }
+
+.dummy {
+  color: silver; }

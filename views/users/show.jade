@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header 회원 정보
+          
+    ul
+      li 이름: #{user.name}
+      li 이메일: #{user.email}
+
+    hr
+    p
+      //- a.btn.btn-default(href='/users/') 목록
+      //- | 
+      a.btn.btn-default(href='/users/#{user._id}/edit') 회원정보수정
+      | 
+      a.btn.btn-default(href='/users/#{user._id}?_method=DELETE') 회원탈퇴

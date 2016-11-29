@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  .container
+    if post.id
+      h1.page-header 글수정
+    else
+      h1.page-header 글쓰기
+
+    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
+      .form-group
+        label(for='title') Title
+        input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
+      .form-group
+        label(for='title') Country
+        input.form-control(type='text', id='country', name='country', placeholder='country', value=post.country)
+        //- input.form-control(type='text', id='q', size=20, placeholder='country')
+        //- i.fa.fa-spin.fa-spinner
+        //- ul.suggest-box
+      .form-group
+        label(for='title') Address
+        input.form-control(type='text', id='address', name='address', placeholder='address', value=post.address)
+      .form-group
+        label(for='title') Price
+        input.form-control(type='text', id='price', name='price', placeholder='price', value=post.price)
+      .form-group
+        label(for='title') Facility
+        input.form-control(type='text', id='Facility', rows='6', name='facility', placeholder='facility', value=post.facility)
+      .form-group
+        label(for='title') Rule
+        input.form-control(type='text', id='rule', rows='6', name='rule', placeholder='rule', value=post.rule)
+      .form-group
+        label(for='content') Content
+        textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+
+      div.form-actions
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        | 
+        button.btn.btn-primary(type='submit') 완료
