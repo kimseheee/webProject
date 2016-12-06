@@ -1,0 +1,35 @@
+extends ../layout
+    
+block content
+  .container
+    h1.page-header 예약 확인
+
+    table.table.table-bordered
+      thead
+        tr
+          th 신청자 이메일
+          th 체크인
+          th 체크아웃
+          th 인원수
+          th
+      tbody
+        each book in books
+          tr
+            td= book.email
+            td= moment(book.checkin).format('YYYY-MM-DD')
+            td= moment(book.checkout).format('YYYY-MM-DD')
+            td= book.people
+            td
+              a.btn.btn-xs.btn-default(data-id=book.id, class='delete') 거절
+
+
+    form#deleteForm(style='display:none', method="POST")
+            
+    script(type='text/javascript').
+      $(".delete").click(function(e) {
+        var id = $(e.currentTarget).data('id');
+        if (confirm('정말 삭제하시겠습니까?')) {
+          $("#deleteForm").attr('action', "/hosts/" + id + "?_method=DELETE").submit();          
+        }
+        return false;
+      });

@@ -12,7 +12,7 @@ block content
           th 제목
           th 날짜
           th 조회수
-          th
+
       tbody
         each post in posts
           tr
@@ -21,21 +21,5 @@ block content
               a(href='/posts/#{post.id}')= post.title
             td= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
             td= post.read
-            td
-              a.btn.btn-xs.btn-default(href='/posts/#{post.id}/edit') 수정
-              | 
-              a.btn.btn-xs.btn-default(data-id=post.id, class='delete') 삭제
 
     a.btn.btn-primary(href='/posts/new') 글쓰기
-
-    form#deleteForm(style='display:none', method="POST")
-            
-    script(type='text/javascript').
-      $(".delete").click(function(e) {
-        var id = $(e.currentTarget).data('id');
-        if (confirm('정말 삭제하시겠습니까?')) {
-          $("#deleteForm").attr('action', "/posts/" + id + "?_method=DELETE").submit();          
-        }
-        return false;
-      });
-            

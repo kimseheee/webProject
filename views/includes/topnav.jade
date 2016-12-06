@@ -23,8 +23,17 @@
         else
           li
             a(href='/hosting') Hosting
-          li
-            a(href='/users/#{currentUser._id}') Profile
+          li.dropdown
+            a(class='dropdown-toggle', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Profile
+              ul.dropdown-menu
+                li
+                  a(href='/users/#{currentUser._id}') Profile
+                li
+                 a(href='/posts/#{currentUser._id}/hostingInfo') HostingInfo
+                li
+                 a(href='/hosts/#{currentUser._id}/reservationInfo') ReservationInfo 
+                li
+                 a(href='/hosts/confirm') ConfirmReservation 
           li
             a(href='/signout') Signout
           

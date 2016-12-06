@@ -83,6 +83,16 @@ router.get('/:id/edit', function(req, res, next) {
     });
 });
 
+router.get('/:id/hostingInfo', function(req, res, next) {
+  Post.find({email: req.session.user.email}, function(err, posts) {
+    if (err) {
+      return next(err);
+    }
+    res.render('posts/hostingInfo', {posts: posts});
+  });
+});
+
+
 router.put('/:id', function(req, res, next) {
     Post.findById({_id: req.params.id}, function(err, post) {
         if (err) {
@@ -115,6 +125,7 @@ router.delete('/:id', function(req, res, next) {
         res.redirect('/posts/index');
     });
 });
+
 
 
 module.exports = router;

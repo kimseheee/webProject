@@ -19,10 +19,19 @@ block content
       label= "Price"
       p.well= post.price
       label= "Facility"
-      p.well= post.address
+      p.well= post.facility
       label= "Rule"
-      p.well= post.address
+      p.well= post.rule
       label= "Content"
       p.well= post.content
-    
+    form(action = "/hosts/#{post.id}/book", method='POST')
+      .form-group
+          label(for='checkin') Check-In
+          input.form-control(type='date', id='checkin', name='checkin', placeholder='checkin')
+          label(for='checkout') Check-Out
+          input.form-control(type='date', id='checkout', name='checkout', placeholder='checkout')
+          label(for='people') 인원수
+          input.form-control(type='number', id='people', name='people', placeholder='people')
+      div.form-actions
+          button.btn.btn-primary(type='submit') Book
     a.btn.btn-default(href='/posts/index') 목록
