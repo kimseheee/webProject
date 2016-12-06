@@ -33,8 +33,20 @@ body {
 a {
   color: #00B7FF; }
 
+.jumbotron {
+  margin-top: -1em;
+  background: url("/images/travel.jpg") no-repeat left top;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  min-height: 40em;
+  color: #fff;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); }
+
 .form {
-  position: relative; }
+  position: relative;
+  top: 40em; }
   .form input {
     width: 20em; }
   .form .fa-spin {
@@ -47,6 +59,7 @@ a {
   .form .suggest-box {
     position: absolute;
     color: #fff;
+    background-color: lightgray;
     margin: 0;
     padding: 0; }
     .form .suggest-box li {
@@ -57,4 +70,6 @@ a {
         background-color: #659CD8; }
 
 .dummy {
-  color: silver; }
+  color: silver;
+  position: absolute;
+  top: 43em; }

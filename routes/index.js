@@ -26,7 +26,7 @@ router.get('/suggest', function(req, res, next) {
 });
 
 router.get('/hosting', function(req, res, next) {
-  res.render('hosting');
+  res.render('hosts/index');
 });
 
 router.get('/signin', function(req, res, next) {

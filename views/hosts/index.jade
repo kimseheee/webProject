@@ -1,25 +1,7 @@
 extends ../layout
 
 block content
-  .container
-    h1.page-header 호스팅 시작하기
-
-    h2 호스트로 등록
-    ul
-       li 숙소 페이지에 필요한 정보
-       li 이용 가능 게스트 요건
-       li 에어비엔비가 도와드려요
-
-    h2 숙소 검색 및 예약
-    ul
-       li 게스트에게 메시지 보내기
-       li 체크인 계획
-
-    h2 게스트 맞이하기
-    ul
-       li 기본적인 준비
-       li 게스트의 숙박 결제
-       li 대금 수령 방법
-       li 수입과 수수료
-       li 요금 설정
-    a.btn.btn-primary(href='/posts/index') 호스팅
+    .container
+        h1.page-header Hosting
+        form.form-hosting(action='/hosting')
+            a.btn.btn-primary(href='/posts/index') 호스팅 시작하기
