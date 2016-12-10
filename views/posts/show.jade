@@ -12,6 +12,9 @@ block content
     p
       label= "Title"
       p.well= post.title
+      label= "Images"
+      each img in post.images
+        img.img-rounded.img-responsive(src=img)
       label= "Country"
       p.well= post.country
       label= "Address"

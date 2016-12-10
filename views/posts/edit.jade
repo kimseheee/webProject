@@ -7,11 +7,27 @@ block content
     else
       h1.page-header 글쓰기
 
-    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
+    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST', enctype="multipart/form-data")
       .form-group
         label(for='title') Title
         input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
       .form-group
+        label(for='images') 이미지 1
+        input.form-control(type="file", name='photos')
+      .form-group
+        label(for='images') 이미지 2
+        input.form-control(type="file", name='photos')
+      .form-group
+        label(for='images') 이미지 3
+        input.form-control(type="file", name='photos')
+      //- .form-group
+      //-   img#preview.img-responsive(src="https://dummyimage.com/200x200/ccc/fff")
+      //-   form#form(method="POST", action="/posts/upload")
+      //-     input#file.form-control(type="file")
+      //-     p#status Please select a file
+      //-     input#url.form-control(type="text", readonly="readonly", name="url", value="")
+      //-     button#submit.btn.btn-primary(disabled="disabled") Upload
+      .form-group  
         label(for='title') Country
         input.form-control(type='text', id='country', name='country', placeholder='country', value=post.country)
         //- input.form-control(type='text', id='q', size=20, placeholder='country')
@@ -37,3 +53,30 @@ block content
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 
         button.btn.btn-primary(type='submit') 완료
+
+    //- script(type='text/javascript').
+    //-   $(function() {
+    //-     $("#preview").hide();
+    //-     $("#file").change(function() {
+    //-       var file = $("#file")[0].files[0];
+    //-       if (file) {
+    //-         var url = "/s3?filename=" + file.name + "&type=" + file.type;
+    //-         console.log(url);
+    //-         $.getJSON(url, function(resp) {
+    //-           $.ajax({
+    //-             url: resp.signedRequest,
+    //-             method: 'PUT',
+    //-             data: file,
+    //-             headers: {'x-amz-acl': 'public-read', 'Content-Type': file.type},
+    //-             processData: false, 
+    //-             contentType: file.type,
+    //-             success: function() {
+    //-               $("#preview").attr("src", resp.url).show();
+    //-               $("#url").val(resp.url);
+    //-               $("#submit").prop("disabled", false);
+    //-             }
+    //-            });
+    //-         });
+    //-       }
+    //-     });
+    //-   });

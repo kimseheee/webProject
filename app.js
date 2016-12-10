@@ -42,10 +42,14 @@ app.use('/bower_components',  express.static(path.join(__dirname, '/bower_compon
 
 app.use(methodOverride('_method', {methods: ['POST', 'GET']}));
 
+var MongoStore = require('connect-mongo')(session);
+app.sessionStore = new MongoStore({mongooseConnection: mongoose.connection});
 app.use(session({
   resave: true,
+  key: 'express.sid',
   saveUninitialized: true,
-  secret: 'long-long-long-secret-string-1313513tefgwdsvbjkvasd'
+  secret: 'long-long-long-secret-string-1313513tefgwdsvbjkvasd',
+  store: app.sessionStore
 }));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -100,6 +104,79 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+// var aws = require('aws-sdk');
+// var S3_BUCKET = process.env.S3_BUCKET;
+
+// app.get('/s3', function(req, res, next) {
+//   var s3 = new aws.S3({region: 'ap-northeast-2'});
+//   var filename = req.query.filename;
+//   var type = req.query.type;
+//   s3.getSignedUrl('putObject', {
+//     Bucket: S3_BUCKET,
+//     Key: filename,
+//     Expires: 900,
+//     ContentType: type,
+//     ACL: 'public-read'
+//   }, function(err, data) {
+//     if (err) {
+//       console.log(err);
+//       return res.json({err: err});
+//     }
+//     res.json({
+//       signedRequest: data,
+//       url: `https://${S3_BUCKET}.s3.amazonaws.com/${filename}`
+//     });
+//   });
+// });
+
+// app.get('/new', function(req, res, next) {
+//   res.render("new");
+// });
+
+// app.post('/', function(req, res, next) {
+//   var img = new Img({url: req.body.url});
+//   img.save(function(err, doc) {
+//     if (err) {
+//       return next(err);
+//     }
+//     res.redirect('/');
+//   });
+// });
+
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
+
+// // error handlers
+
+// // development error handler
+// // will print stacktrace
+// if (app.get('env') === 'development') {
+//   app.use(function(err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.render('error', {
+//       message: err.message,
+//       error: err
+//     });
+//   });
+// }
+
+// // production error handler
+// // no stacktraces leaked to user
+// app.use(function(err, req, res, next) {
+//   res.status(err.status || 500);
+//   res.render('error', {
+//     message: err.message,
+//     error: {}
+//   });
+// });
+
+
 
 
 module.exports = app;

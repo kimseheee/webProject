@@ -1,3 +1,4 @@
+
 $(function() {
   $('#q').keyup(function() {
     var query = $('#q').val() || "";

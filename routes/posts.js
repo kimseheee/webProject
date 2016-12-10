@@ -1,6 +1,17 @@
-var express = require('express');
+var express = require('express'),
+    multer  = require('multer'),
+    path = require('path'),
+    _ = require('lodash'),
+    fs = require('fs'),
+    upload = multer({ dest: 'tmp' }),
+    Post = require('../models/Post');
+    // Comment = require('../models/comment');
 var router = express.Router();
-var Post = require('../models/Post');
+var mimetypes = {
+  "image/jpeg": "jpg",
+  "image/gif": "gif",
+  "image/png": "png"
+};
 
 function validate(form) {
     if (!form.title) {
@@ -51,13 +62,24 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-router.post('/', function(req, res, next) {
-    var error = validate(req.body);
-    if (error) {
-        return res.redirect('back');
-    }
-    var postCon = new Post({
+router.post('/', upload.array('photos'), function(req, res, next) {
+    var dest = path.join(__dirname, '../public/images/');
+    var images = [];
+    if (req.files && req.files.length > 0) {
+        _.each(req.files, function(file) {
+        var ext = mimetypes[file.mimetype];
+        if (!ext) {
+            return;
+        }
+        var filename = file.filename + "." + ext;
+        fs.renameSync(file.path, dest + filename);
+        images.push("/images/" + filename);
+    });
+  }
+
+  var postCon = new Post({
             email: req.session.user.email,
+            images: images,
             title: req.body.title,
             country: req.body.country,
             address: req.body.address,

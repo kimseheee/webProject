@@ -20,7 +20,10 @@ block content
             td= moment(book.checkout).format('YYYY-MM-DD')
             td= book.people
             td
-              a.btn.btn-xs.btn-default(data-id=book.id, class='delete') 거절
+              div.form-action
+                button.btn.btn-primary(type='submit')  수락
+                | 
+                a.btn.btn-default(data-id=book.id, class='delete') 거절
 
 
     form#deleteForm(style='display:none', method="POST")

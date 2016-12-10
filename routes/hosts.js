@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('../models/Book');
-var Post = require('../models/Post')
+var Post = require('../models/Post');
 
 router.get('/index', function(req, res, next) {
   res.render('hosts/index');
@@ -23,7 +23,23 @@ router.get('/confirm', function(req, res, next) {
         }
         res.render('hosts/confirm', { books: books });
     });
-})
+});
+
+router.put('/:id', function(req, res, next) {
+    Book.findById({_id: req.params.id}, function(err, book) {
+        if (err) {
+            return next(err);
+        }
+        book.booked = true;
+        book.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/hosts/index');
+        });
+    });
+});
+
 
 router.post('/:id/book', function(req, res, next) {
     Post.findById(req.params.id, function(err, post) {     
