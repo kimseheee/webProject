@@ -37,4 +37,29 @@ block content
           input.form-control(type='number', id='people', name='people', placeholder='people')
       div.form-actions
           button.btn.btn-primary(type='submit') Book
+    p
+      h3 Comment (#{post.numComment})
+      table.table
+        tr
+          th email
+          th content
+          th time
+        each comment in comments
+          tr
+            td= comment.email
+            td= comment.content
+            td= moment(comment.createdAt).format('YYYY/MM/DD')
+  
+        //- form.form-inline(action='/posts/' + post._id + '/comments', method='POST')
+    form(action = "/posts/#{post.id}/comments", method='POST')
+      .form-group
+        label.sr-only(for='email') email
+        input.form-control(name='email', placeholder='email')
+      .form-group
+        label.sr-only(for='content') content
+        input.form-control(name='content', size=50, placeholder='content')
+      div.form-actions
+        button.btn.btn-primary(type='submit') 댓글저장
+          //- button.btn.btn-info 댓글저장
+
     a.btn.btn-default(href='/posts/index') 목록

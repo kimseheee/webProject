@@ -20,10 +20,11 @@ block content
             td= moment(book.checkout).format('YYYY-MM-DD')
             td= book.people
             td
-              div.form-action
-                button.btn.btn-primary(type='submit')  수락
-                | 
-                a.btn.btn-default(data-id=book.id, class='delete') 거절
+              form(action = (book.id) ? "/hosts/#{book.id}?_method=PUT" : "/hosts", method='POST')
+                div.form-action
+                  button.btn.btn-default(href='/hosts/#{book.id}')  수락
+                  | 
+                  a.btn.btn-default(data-id=book.id, class='delete') 거절
 
 
     form#deleteForm(style='display:none', method="POST")
@@ -31,7 +32,7 @@ block content
     script(type='text/javascript').
       $(".delete").click(function(e) {
         var id = $(e.currentTarget).data('id');
-        if (confirm('정말 삭제하시겠습니까?')) {
+        if (confirm('정말 거절하시겠습니까?')) {
           $("#deleteForm").attr('action', "/hosts/" + id + "?_method=DELETE").submit();          
         }
         return false;

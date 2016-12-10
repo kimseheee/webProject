@@ -20,7 +20,6 @@ $(function() {
           return '<li>' + name + '</li>';
         });
         $('.suggest-box').html(els.join('\n')).show();
-
         // li item을 클릭했을 때, text box의 내용을 바꾸고, suggest-box감춤
         $('.suggest-box li').click(function(e) {
           $('#q').val($(e.currentTarget).text());

@@ -12,6 +12,7 @@ block content
           th 제목
           th 날짜
           th 조회수
+          th 댓글수
 
       tbody
         each post in posts
@@ -21,5 +22,6 @@ block content
               a(href='/posts/#{post.id}')= post.title
             td= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')
             td= post.read
+            td= post.numComment
 
     a.btn.btn-primary(href='/posts/new') 호스팅

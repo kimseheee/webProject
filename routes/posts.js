@@ -3,9 +3,9 @@ var express = require('express'),
     path = require('path'),
     _ = require('lodash'),
     fs = require('fs'),
-    upload = multer({ dest: 'tmp' }),
-    Post = require('../models/Post');
-    // Comment = require('../models/comment');
+    upload = multer({ dest: 'tmp' });
+var Post = require('../models/Post');
+var Comments = require('../models/Comment');
 var router = express.Router();
 var mimetypes = {
   "image/jpeg": "jpg",
@@ -56,9 +56,14 @@ router.get('/:id', function(req, res, next) {
         if(err) {
             return next(err);
         }
-        post.read++;
-        post.save();
-        res.render('posts/show', {post: post}); 
+        Comments.find({post: post.id}, function(err, comments) {
+            if (err) {
+                return next(err);
+            }
+            post.read++;
+            post.save();
+            res.render('posts/show', {post: post, comments: comments}); 
+        });
     });
 });
 
@@ -135,6 +140,26 @@ router.put('/:id', function(req, res, next) {
                 return next(err);
             }
             res.redirect('/posts/index');
+        });
+    });
+});
+
+router.post('/:id/comments', function(req, res, next) {
+    var comment = new Comments({
+        post: req.params.id,
+        email: req.body.email,
+        content: req.body.content
+    });
+
+    comment.save(function(err) {
+        if (err) {
+        return next(err);
+        }
+        Post.findByIdAndUpdate(req.params.id, {$inc: {numComment: 1}}, function(err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/posts/' + req.params.id);
         });
     });
 });

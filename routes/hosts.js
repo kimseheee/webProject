@@ -17,11 +17,17 @@ router.get('/reservationInfo', function(req, res, next) {
 });
 
 router.get('/confirm', function(req, res, next) {
-    Book.find({hostemail: req.session.user.email}, function(err, books) {
-        if (err) {
+    Book.find({hostemail: req.session.user.email, booked: "false"}, function(err, books) {
+        if(err) {
             return next(err);
         }
-        res.render('hosts/confirm', { books: books });
+        res.render('hosts/confirm', {books: books});
+        // Book.find({booked: "false"}, function(req, res, next) {
+        //     if(err) {
+        //         return next(err);
+        //     }
+        //     res.render('hosts/confirm', {books: books});
+        // });
     });
 });
 
@@ -30,7 +36,7 @@ router.put('/:id', function(req, res, next) {
         if (err) {
             return next(err);
         }
-        book.booked = true;
+        book.booked = "true";
         book.save(function(err) {
             if (err) {
                 return next(err);
@@ -42,7 +48,7 @@ router.put('/:id', function(req, res, next) {
 
 
 router.post('/:id/book', function(req, res, next) {
-    Post.findById(req.params.id, function(err, post) {     
+    Post.findById(req.params.id, function(err, post) {   
         var book = new Book({
             email: req.session.user.email,
             hostemail: post.email,
@@ -89,5 +95,7 @@ router.delete('/:id', function(req, res, next) {
         res.redirect('/');
     });
 });
+
+
 
 module.exports = router;

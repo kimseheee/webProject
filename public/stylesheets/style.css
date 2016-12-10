@@ -34,7 +34,7 @@ a {
   color: #00B7FF; }
 
 .jumbotron {
-  margin-top: -1em;
+  margin-top: 2em;
   background: url("/images/travel.jpg") no-repeat left top;
   -webkit-background-size: 100%;
   -moz-background-size: 100%;

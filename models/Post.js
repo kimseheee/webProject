@@ -14,6 +14,7 @@ var board = new Schema({
     rule: {type: String},
     content: {type: String},
     read: {type: Number, default: 0},
+    numComment: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now}
 }, {
   toJSON: {virtuals: true },

@@ -7,7 +7,7 @@ block content
     else
       h1.page-header 글쓰기
 
-    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST', enctype="multipart/form-data")
+    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
       .form-group
         label(for='title') Title
         input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
