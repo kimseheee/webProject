@@ -11,7 +11,9 @@ var mongoose = require('mongoose'),
      checkin: {type: Date},
      checkout: {type: Date},
      people: {type: Number},
-     booked: {type: String, default: "false"}
+     booked: {type: String, default: "false"},
+     cancelRequest: {type: String, default: "false"},
+     cancelRejected: {type: String, default: "false"}
 });
 
 var Book = mongoose.model('Book', book);

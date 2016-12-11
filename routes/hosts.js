@@ -31,12 +31,52 @@ router.get('/confirm', function(req, res, next) {
     });
 });
 
+router.get('/cancel', function(req, res, next) {
+    Book.find({hostemail: req.session.user.email, cancelRequest: "true"}, function(err, books) {
+        if(err) {
+            return next(err);
+        }
+        res.render('hosts/cancel', {books: books});
+    });
+});
+
 router.put('/:id', function(req, res, next) {
     Book.findById({_id: req.params.id}, function(err, book) {
         if (err) {
             return next(err);
         }
         book.booked = "true";
+        book.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/hosts/index');
+        });
+    });
+});
+
+router.put('/cancel/:id', function(req, res, next) {
+    Book.findById({_id: req.params.id}, function(err, book) {
+        if (err) {
+            return next(err);
+        }
+        book.cancelRequest = "true";
+        book.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/hosts/index');
+        });
+    });
+});
+
+router.put('/reject/:id', function(req, res, next) {
+    Book.findById({_id: req.params.id}, function(err, book) {
+        if (err) {
+            return next(err);
+        }
+        book.cancelRequest = "false";
+        book.cancelRejected = "true";
         book.save(function(err) {
             if (err) {
                 return next(err);
@@ -79,7 +119,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/:id/reservationInfo', function(req, res, next) {
-    Book.find({email: req.session.user.email}, function(err, books) {
+    Book.find({email: req.session.user.email, booked: "true", cancelRequest: "false"}, function(err, books) {
     if (err) {
       return next(err);
     }

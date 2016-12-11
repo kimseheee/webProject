@@ -19,18 +19,11 @@ block content
             td= moment(book.checkin).format('YYYY-MM-DD')
             td= moment(book.checkout).format('YYYY-MM-DD')
             td= book.people
-            td 
-              a.btn.btn-xs.btn-default(data-id=book.id, class='delete') 취소
+            td
+              form(action = (book.id) ? "/hosts/cancel/#{book.id}?_method=PUT" : "/hosts", method='POST')
+                div.form-action
+                  if(book.cancelRejected === 'false') 
+                    button.btn.btn-default(href='/hosts/cancel/#{book.id}')  취소요청
 
-    form#deleteForm(style='display:none', method="POST")
-            
-    script(type='text/javascript').
-      $(".delete").click(function(e) {
-        var id = $(e.currentTarget).data('id');
-        if (confirm('정말 취소하시겠습니까?')) {
-          $("#deleteForm").attr('action', "/hosts/" + id + "?_method=DELETE").submit();          
-        }
-        return false;
-      });    
 
     
