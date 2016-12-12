@@ -6,20 +6,18 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      p.navbar-text AirBNB
-      a.navbar-brand(href='/') 
-        i.fa.fa-home
+      a.navbar-text(href='/') AirBNB
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
         if(currentUser)
           if(currentUser.manager)
             li
               a(href='/users') Users
-      form.navbar-form.navbar-left(role='search')
+      form.navbar-form.navbar-left(action = "/posts/search", method='POST')
         .form-group
-          input.form-control(type='text', placeholder='Search')
+          input.form-control(type='text', placeholder='Search', name='city')
           |         
-          button.btn.btn-default.btn(type='button')
+          button.btn.btn-default.btn(type='submit')
             span.glyphicon.glyphicon-search(aria-hidden='true')    
       ul.nav.navbar-nav.navbar-right
         if (!currentUser) 

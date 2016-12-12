@@ -17,8 +17,8 @@ function validate(form) {
     if (!form.title) {
         return '제목을 입력해주세요';
     }
-    if (!form.country) {
-        return '나라를 입력해주세요';
+    if (!form.city) {
+        return '도시를 입력해주세요';
     }
     if (!form.address) {
         return '주소를 입력해주세요';
@@ -83,26 +83,26 @@ router.post('/', needAuth, upload.array('photos'), function(req, res, next) {
     var images = [];
     if (req.files && req.files.length > 0) {
         _.each(req.files, function(file) {
-        var ext = mimetypes[file.mimetype];
-        if (!ext) {
-            return;
-        }
-        var filename = file.filename + "." + ext;
-        fs.renameSync(file.path, dest + filename);
-        images.push("/images/" + filename);
-    });
-  }
+            var ext = mimetypes[file.mimetype];
+            if (!ext) {
+                return;
+            }
+            var filename = file.filename + "." + ext;
+            fs.renameSync(file.path, dest + filename);
+            images.push("/images/" + filename);
+      });
+    }
 
-  var postCon = new Post({
-            email: req.session.user.email,
-            images: images,
-            title: req.body.title,
-            country: req.body.country,
-            address: req.body.address,
-            price : req.body.price,
-            facility: req.body.facility,
-            rule: req.body.rule,
-            content: req.body.content
+    var postCon = new Post({
+        email: req.session.user.email,
+        images: images,
+        title: req.body.title,
+        city: req.body.city,
+        address: req.body.address,
+        price : req.body.price,
+        facility: req.body.facility,
+        rule: req.body.rule,
+        content: req.body.content
     });
     postCon.save(function(err) {
         if (err) {
@@ -140,7 +140,7 @@ router.put('/:id', needAuth, function(req, res, next) {
             return res.redirect('back'); 
         }
         post.title = req.body.title;
-        post.country = req.body.country;
+        post.city = req.body.city;
         post.address = req.body.address;
         post.price = req.body.price;
         post.facility = req.body.facility;
@@ -172,6 +172,15 @@ router.post('/:id/comments', needAuth, function(req, res, next) {
         }
         res.redirect('/posts/' + req.params.id);
         });
+    });
+});
+
+router.post('/search', function(req, res, next) {
+    Post.find({city: req.body.city}, function(err, posts) {
+        if(err) {
+            return next(err);
+        }
+        res.render('posts/search', {posts: posts});
     });
 });
 

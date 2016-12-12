@@ -2,9 +2,7 @@ extends ../layout
 
 block content
   .container
-    h1.page-header 숙소
-    
-    //- | total #{pagination.numPosts} posts  
+    h1.page-header 검색된 숙소 
     table.table.table-bordered
       thead
         tr
@@ -24,4 +22,3 @@ block content
             td= post.read
             td= post.numComment
 
-    a.btn.btn-primary(href='/posts/new') 호스팅

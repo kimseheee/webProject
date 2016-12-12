@@ -7,7 +7,7 @@ block content
     else
       h1.page-header 글쓰기
 
-    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST')
+    form(action = (post.id) ? "/posts/#{post.id}?_method=PUT" : "/posts", method='POST', enctype="multipart/form-data")
       .form-group
         label(for='title') Title
         input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
@@ -28,14 +28,11 @@ block content
       //-     input#url.form-control(type="text", readonly="readonly", name="url", value="")
       //-     button#submit.btn.btn-primary(disabled="disabled") Upload
       .form-group  
-        label(for='title') Country
-        input.form-control(type='text', id='country', name='country', placeholder='country', value=post.country)
+        label(for='title') City
+        input.form-control(type='text', id='city', name='city', placeholder='city', value=post.city)
         //- input.form-control(type='text', id='q', size=20, placeholder='country')
         //- i.fa.fa-spin.fa-spinner
         //- ul.suggest-box
-      .form-group  
-        label(for='title') City
-        input.form-control(type='text', id='city', name='ciry', placeholder='city', value=post.city)
       .form-group
         label(for='title') Address
         //- input#postCode(type='text', name='postCode', placeholder='우편번호')

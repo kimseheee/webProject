@@ -7,7 +7,7 @@ var board = new Schema({
     // url: {type: String, required: true, trim: true},
     images: [String],
     title: {type: String},
-    country: {type: String},
+    city: {type: String},
     address: {type: String},
     price: {type: String},
     facility: {type: String},
