@@ -1,5 +1,5 @@
 {
-  "name": "autocomplete",
+  "name": "project",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -36,6 +36,7 @@
     "gulp-env": "^0.2.0",
     "gulp-jshint": "^1.12.0",
     "gulp-nodemon": "^2.0.4",
-    "gulp-sass": "^2.1.0"
+    "gulp-sass": "^2.1.0",
+    "jshint": "^2.8.0"
   }
 }

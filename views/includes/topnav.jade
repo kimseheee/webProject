@@ -6,6 +6,7 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
+      p.navbar-text AirBNB
       a.navbar-brand(href='/') 
         i.fa.fa-home
     #navbar.collapse.navbar-collapse
@@ -14,6 +15,12 @@
           if(currentUser.manager)
             li
               a(href='/users') Users
+      form.navbar-form.navbar-left(role='search')
+        .form-group
+          input.form-control(type='text', placeholder='Search')
+          |         
+          button.btn.btn-default.btn(type='button')
+            span.glyphicon.glyphicon-search(aria-hidden='true')    
       ul.nav.navbar-nav.navbar-right
         if (!currentUser) 
           li

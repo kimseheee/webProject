@@ -3,11 +3,21 @@ var router = express.Router();
 var Book = require('../models/Book');
 var Post = require('../models/Post');
 
-router.get('/index', function(req, res, next) {
+function needAuth(req, res, next) {
+    if (req.session.user) {
+      next();
+    } else {
+      req.flash('danger', '로그인이 필요합니다.');
+      res.redirect('/signin');
+    }
+}
+
+
+router.get('/index', needAuth, function(req, res, next) {
   res.render('hosts/index');
 });
 
-router.get('/reservationInfo', function(req, res, next) {
+router.get('/reservationInfo', needAuth, function(req, res, next) {
     Book.find({}, function(err, books) {
         if (err) {
             return next(err);
@@ -16,7 +26,7 @@ router.get('/reservationInfo', function(req, res, next) {
     });
 });
 
-router.get('/confirm', function(req, res, next) {
+router.get('/confirm', needAuth, function(req, res, next) {
     Book.find({hostemail: req.session.user.email, booked: "false"}, function(err, books) {
         if(err) {
             return next(err);
@@ -31,7 +41,7 @@ router.get('/confirm', function(req, res, next) {
     });
 });
 
-router.get('/cancel', function(req, res, next) {
+router.get('/cancel', needAuth, function(req, res, next) {
     Book.find({hostemail: req.session.user.email, cancelRequest: "true"}, function(err, books) {
         if(err) {
             return next(err);
@@ -40,7 +50,7 @@ router.get('/cancel', function(req, res, next) {
     });
 });
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', needAuth, function(req, res, next) {
     Book.findById({_id: req.params.id}, function(err, book) {
         if (err) {
             return next(err);
@@ -55,7 +65,7 @@ router.put('/:id', function(req, res, next) {
     });
 });
 
-router.put('/cancel/:id', function(req, res, next) {
+router.put('/cancel/:id', needAuth, function(req, res, next) {
     Book.findById({_id: req.params.id}, function(err, book) {
         if (err) {
             return next(err);
@@ -70,7 +80,7 @@ router.put('/cancel/:id', function(req, res, next) {
     });
 });
 
-router.put('/reject/:id', function(req, res, next) {
+router.put('/reject/:id', needAuth, function(req, res, next) {
     Book.findById({_id: req.params.id}, function(err, book) {
         if (err) {
             return next(err);
@@ -87,7 +97,7 @@ router.put('/reject/:id', function(req, res, next) {
 });
 
 
-router.post('/:id/book', function(req, res, next) {
+router.post('/:id/book', needAuth, function(req, res, next) {
     Post.findById(req.params.id, function(err, post) {   
         var book = new Book({
             email: req.session.user.email,
@@ -109,7 +119,7 @@ router.post('/:id/book', function(req, res, next) {
     });
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', needAuth, function(req, res, next) {
     Book.findById(req.params.id, function(err, book) {     
         if(err) {
             return next(err);
@@ -118,7 +128,7 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-router.get('/:id/reservationInfo', function(req, res, next) {
+router.get('/:id/reservationInfo', needAuth, function(req, res, next) {
     Book.find({email: req.session.user.email, booked: "true", cancelRequest: "false"}, function(err, books) {
     if (err) {
       return next(err);
@@ -127,7 +137,7 @@ router.get('/:id/reservationInfo', function(req, res, next) {
   });
 });
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', needAuth, function(req, res, next) {
     Book.findOneAndRemove({_id: req.params.id}, function(err) { 
         if (err) {
             return next(err);

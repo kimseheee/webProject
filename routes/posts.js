@@ -38,6 +38,16 @@ function validate(form) {
     return null;
 }
 
+function needAuth(req, res, next) {
+    if (req.session.user) {
+      next();
+    } else {
+      req.flash('danger', '로그인이 필요합니다.');
+      res.redirect('/signin');
+    }
+}
+
+
 router.get('/index', function(req, res, next) {
     Post.find({}, function(err, posts) {
         if (err) {
@@ -47,7 +57,7 @@ router.get('/index', function(req, res, next) {
     });
 });
 
-router.get('/new', function(req, res, next) {
+router.get('/new',needAuth, function(req, res, next) {
     res.render('posts/edit', {post: {}});
 });
 
@@ -56,6 +66,7 @@ router.get('/:id', function(req, res, next) {
         if(err) {
             return next(err);
         }
+
         Comments.find({post: post.id}, function(err, comments) {
             if (err) {
                 return next(err);
@@ -67,7 +78,7 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-router.post('/', upload.array('photos'), function(req, res, next) {
+router.post('/', needAuth, upload.array('photos'), function(req, res, next) {
     var dest = path.join(__dirname, '../public/images/');
     var images = [];
     if (req.files && req.files.length > 0) {
@@ -101,7 +112,7 @@ router.post('/', upload.array('photos'), function(req, res, next) {
     });
 });
 
-router.get('/:id/edit', function(req, res, next) {
+router.get('/:id/edit', needAuth, function(req, res, next) {
     Post.findById(req.params.id, function(err, post) {  
         if (err) {
             return next(err);
@@ -110,7 +121,7 @@ router.get('/:id/edit', function(req, res, next) {
     });
 });
 
-router.get('/:id/hostingInfo', function(req, res, next) {
+router.get('/:id/hostingInfo', needAuth, function(req, res, next) {
   Post.find({email: req.session.user.email}, function(err, posts) {
     if (err) {
       return next(err);
@@ -120,7 +131,7 @@ router.get('/:id/hostingInfo', function(req, res, next) {
 });
 
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', needAuth, function(req, res, next) {
     Post.findById({_id: req.params.id}, function(err, post) {
         if (err) {
             return next(err);
@@ -144,7 +155,7 @@ router.put('/:id', function(req, res, next) {
     });
 });
 
-router.post('/:id/comments', function(req, res, next) {
+router.post('/:id/comments', needAuth, function(req, res, next) {
     var comment = new Comments({
         post: req.params.id,
         email: req.body.email,
@@ -164,7 +175,7 @@ router.post('/:id/comments', function(req, res, next) {
     });
 });
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', needAuth, function(req, res, next) {
     Post.findOneAndRemove({_id: req.params.id}, function(err) { 
         if (err) {
             return next(err);
