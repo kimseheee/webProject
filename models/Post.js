@@ -9,7 +9,6 @@ var board = new Schema({
     title: {type: String},
     city: {type: String},
     address: {type: String},
-    detailAddress: {type: String},
     price: {type: String},
     facility: {type: String},
     rule: {type: String},
