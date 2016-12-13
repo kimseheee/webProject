@@ -99,6 +99,7 @@ router.post('/', needAuth, upload.array('photos'), function(req, res, next) {
         title: req.body.title,
         city: req.body.city,
         address: req.body.address,
+        detailAddress: req.body.detailAddress,
         price : req.body.price,
         facility: req.body.facility,
         rule: req.body.rule,
@@ -142,6 +143,7 @@ router.put('/:id', needAuth, function(req, res, next) {
         post.title = req.body.title;
         post.city = req.body.city;
         post.address = req.body.address;
+        post.detailAddress = req.body.detailAddress;
         post.price = req.body.price;
         post.facility = req.body.facility;
         post.rule = req.body.rule;

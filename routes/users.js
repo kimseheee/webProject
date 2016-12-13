@@ -1,5 +1,6 @@
 var express = require('express'),
     User = require('../models/User');
+var Post = require('../models/Post');
 var router = express.Router();
 
 function needAuth(req, res, next) {
@@ -101,12 +102,14 @@ router.put('/:id', function(req, res, next) {
 
 router.delete('/:id', function(req, res, next) {
   User.findOneAndRemove({_id: req.params.id}, function(err) {
-    if (err) {
-      return next(err);
-    }
-    delete req.session.user;
-    req.flash('success', '사용자 계정이 삭제되었습니다.');
-    res.redirect('/');
+    Post.remove({email: req.session.user.email}, function(err) {
+      if (err) {
+        return next(err);
+      }
+      delete req.session.user;
+      req.flash('success', '사용자 계정이 삭제되었습니다.');
+      res.redirect('/');
+    });    
   });
 });
 
